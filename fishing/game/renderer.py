@@ -9,6 +9,7 @@ SURFACE_Y = 80
 MAX_DEPTH_Y = HEIGHT - 40
 
 WINDOW_SIZE = (WIDTH, HEIGHT)
+FPS = 60
 
 COLOR_SKY = (140, 200, 230)
 COLOR_WATER = (30, 90, 150)
@@ -35,7 +36,15 @@ def draw_text(surface, font, text, pos, color=COLOR_TEXT):
     surface.blit(font.render(text, True, color), pos)
 
 
-def draw_banner(surface, font, text):
+def draw_banner(surface, font, text, y_offset=0):
     surf = font.render(text, True, (255, 220, 80))
-    rect = surf.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
+    rect = surf.get_rect(center=(surface.get_width() // 2,
+                                 surface.get_height() // 2 + y_offset))
     surface.blit(surf, rect)
+
+
+def draw_overlay(surface, alpha=150):
+    """Darken the whole scene (used behind the end-of-round banner)."""
+    shade = pygame.Surface(surface.get_size(), pygame.SRCALPHA)
+    shade.fill((0, 0, 0, alpha))
+    surface.blit(shade, (0, 0))

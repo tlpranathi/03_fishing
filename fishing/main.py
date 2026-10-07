@@ -7,7 +7,7 @@ Run with:  python3 main.py
 import pygame
 
 from game.game_engine import GameEngine
-from game.renderer import WINDOW_SIZE
+from game.renderer import WINDOW_SIZE, FPS
 
 
 def main():
@@ -23,12 +23,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                engine.cast()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                engine.restart()
 
         engine.update()
         engine.draw(screen, font)
 
         pygame.display.flip()
-        clock.tick(60)
+        clock.tick(FPS)
 
     pygame.quit()
 
